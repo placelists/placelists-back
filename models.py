@@ -36,20 +36,6 @@ class UserUpdate(BaseModel):
     username: str
 
 
-class Placelist(BaseModel):
-    id: str
-    name: str
-    author: User
-
-
-class PlacelistCreate(BaseModel):
-    name: str
-
-
-class PlacelistUpdate(BaseModel):
-    name: str
-
-
 class Place(BaseModel):
     id: str
     name: str
@@ -60,3 +46,23 @@ class Place(BaseModel):
 class PlaceCreate(BaseModel):
     name: str
     address: str
+
+
+class Placelist(BaseModel):
+    id: str
+    name: str
+    author: User
+
+class PlacelistWithPlaces(Placelist):
+    id: str
+    name: str
+    author: User
+    places: list[Place]
+
+
+class PlacelistCreate(BaseModel):
+    name: str
+
+
+class PlacelistUpdate(BaseModel):
+    name: str

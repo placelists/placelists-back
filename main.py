@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from models import Identity, MultipleResponseWrapper, Place, PlaceCreate, Placelist, PlacelistCreate, PlacelistUpdate, SingleResponseWrapper, User, UserUpdate
+from models import Identity, MultipleResponseWrapper, Place, PlaceCreate, Placelist, PlacelistCreate, PlacelistUpdate, PlacelistWithPlaces, SingleResponseWrapper, User, UserUpdate
 
 app = FastAPI(
     title='Placelists',
@@ -40,17 +40,17 @@ def post_placelists(placelist_create: PlacelistCreate) -> SingleResponseWrapper[
 
 
 @app.get('/placelists/{id}', tags=['placelists'])
-def get_placelists_id(id: str) -> SingleResponseWrapper[Placelist]:
+def get_placelists_id(id: str) -> SingleResponseWrapper[PlacelistWithPlaces]:
     pass
 
 
 @app.put('/placelists/{id}', tags=['placelists'])
-def put_placelists_id(id: str, placelist_update: PlacelistUpdate) -> SingleResponseWrapper[Placelist]:
+def put_placelists_id(id: str, placelist_update: PlacelistUpdate) -> SingleResponseWrapper[PlacelistWithPlaces]:
     pass
 
 
 @app.delete('/placelists/{id}', tags=['placelists'])
-def delete_placelists_id(id: str) -> SingleResponseWrapper[Placelist]:
+def delete_placelists_id(id: str) -> SingleResponseWrapper[PlacelistWithPlaces]:
     pass
 
 
