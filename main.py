@@ -1,6 +1,7 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
+from datetime import datetime
 from values import PLACELIST, USER, USER_PLACELIST
 
 import string
@@ -12,6 +13,14 @@ app = FastAPI(
     title='Placelists',
     version='1.0',
     servers=[{'url': 'http://localhost:8082'}],
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -63,28 +72,46 @@ def post_placelists(placelist_create: PlacelistCreate) -> SingleResponseWrapper[
 
 @app.get('/api/v1/placelists/{id}', tags=['placelists'])
 def get_placelists_id(id: str) -> SingleResponseWrapper[PlacelistWithPlaces]:
-    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=Placelist(
+    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=PlacelistWithPlaces(
         id=get_id(),
         name=get_id(),
-        author_username=get_id()
+        author_username=get_id(),
+        places=[Place(
+            id=get_id(),
+            name=get_id(),
+            address=get_id(),
+            visited=bool(random.getrandbits(1))
+        ) for _ in range(20)]
     ), meta=Meta(success=True)).model_dump())
 
 
 @app.put('/api/v1/placelists/{id}', tags=['placelists'])
 def put_placelists_id(id: str, placelist_update: PlacelistUpdate) -> SingleResponseWrapper[PlacelistWithPlaces]:
-    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=Placelist(
+    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=PlacelistWithPlaces(
         id=get_id(),
         name=get_id(),
-        author_username=get_id()
+        author_username=get_id(),
+        places=[Place(
+            id=get_id(),
+            name=get_id(),
+            address=get_id(),
+            visited=bool(random.getrandbits(1))
+        ) for _ in range(20)]
     ), meta=Meta(success=True)).model_dump())
 
 
 @app.delete('/api/v1/placelists/{id}', tags=['placelists'])
 def delete_placelists_id(id: str) -> SingleResponseWrapper[PlacelistWithPlaces]:
-    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=Placelist(
+    return JSONResponse(status_code=200, content=SingleResponseWrapper(data=PlacelistWithPlaces(
         id=get_id(),
         name=get_id(),
-        author_username=get_id()
+        author_username=get_id(),
+        places=[Place(
+            id=get_id(),
+            name=get_id(),
+            address=get_id(),
+            visited=bool(random.getrandbits(1))
+        ) for _ in range(20)]
     ), meta=Meta(success=True)).model_dump())
 
 
@@ -94,8 +121,8 @@ def get_places(query: str) -> MultipleResponseWrapper[Place]:
         id=get_id(),
         name=get_id(),
         address=get_id(),
-        visited=i % 3 == 0
-    ) for i in range(20)], meta=Meta(success=True)).model_dump())
+        visited=bool(random.getrandbits(1))
+    ) for _ in range(20)], meta=Meta(success=True)).model_dump())
 
 
 @app.post('/api/v1/places', tags=['places'])
@@ -104,7 +131,7 @@ def post_places(place_create: PlaceCreate) -> SingleResponseWrapper[Place]:
         id=get_id(),
         name=get_id(),
         address=get_id(),
-        visited=False
+        visited=bool(random.getrandbits(1))
     ), meta=Meta(success=True)).model_dump())
 
 
@@ -114,7 +141,7 @@ def get_places_id(id: str) -> SingleResponseWrapper[Place]:
         id=get_id(),
         name=get_id(),
         address=get_id(),
-        visited=False
+        visited=bool(random.getrandbits(1))
     ), meta=Meta(success=True)).model_dump())
 
 
@@ -124,5 +151,5 @@ def put_places_id(id: str) -> SingleResponseWrapper[Place]:
         id=get_id(),
         name=get_id(),
         address=get_id(),
-        visited=False
+        visited=bool(random.getrandbits(1))
     ), meta=Meta(success=True)).model_dump())
