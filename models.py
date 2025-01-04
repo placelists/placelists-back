@@ -28,11 +28,6 @@ class Identity(BaseModel):
 
 
 class User(BaseModel):
-    id: str
-    username: str
-
-
-class UserUpdate(BaseModel):
     username: str
 
 
@@ -51,12 +46,9 @@ class PlaceCreate(BaseModel):
 class Placelist(BaseModel):
     id: str
     name: str
-    author: User
+    author_username: str | None
 
 class PlacelistWithPlaces(Placelist):
-    id: str
-    name: str
-    author: User
     places: list[Place]
 
 
