@@ -21,13 +21,11 @@ class MultipleResponseWrapper[T](BaseModel):
     errors: list[Error] = []
 
 
-class Identity(BaseModel):
-    access_token: str
-    refresh_token: str
-    expires_in: int
-
-
 class User(BaseModel):
+    username: str
+
+
+class UserUpdate(BaseModel):
     username: str
 
 
@@ -43,13 +41,16 @@ class PlaceCreate(BaseModel):
     address: str
 
 
+class PlaceUpdate(BaseModel):
+    name: str
+    address: str
+    visited: bool
+
+
 class Placelist(BaseModel):
     id: str
     name: str
     author_username: str | None
-
-class PlacelistWithPlaces(Placelist):
-    places: list[Place]
 
 
 class PlacelistCreate(BaseModel):

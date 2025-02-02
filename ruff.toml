@@ -1,0 +1,3 @@
+[lint.isort]
+force-single-line = true
+lines-after-imports = 2
